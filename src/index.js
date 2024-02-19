@@ -1,6 +1,7 @@
 import { fetchBreeds } from './cat-api';
 import { fetchCatByBreed } from './cat-api';
 import Notiflix from 'notiflix';
+import SlimSelect from 'slim-select';
 
 const breedSelect = document.querySelector('.breed-select');
 const catInfo = document.querySelector('.cat-info');
@@ -17,7 +18,7 @@ W tym celu użyj dodatkowych klas CSS.
 - Po zakończeniu wszystkich żądań, p.loader musi zostać ukryty.
 */
 /*
-- Podczas wykonywania żądania listy ras, należy ukryć select.breed-select i wyświetlić p.loader.
+
 */
 try {
   loader.classList.remove('hidden'); // Podczas wykonywania żądania listy ras, należy ukryć select.breed-select i wyświetlić p.loader.
@@ -26,6 +27,10 @@ try {
   console.log(error);
   showError();
 }
+
+const slimSelect = new SlimSelect({
+  select: '.breed-select',
+});
 
 /*
 ...W przypadku pomyślnego żądania, należy wypełnić select.breed-select opcjami tak, aby value 
@@ -38,6 +43,7 @@ function renderSelect(breeds) {
     })
     .join('');
   breedSelect.insertAdjacentHTML('beforeend', markup);
+  slimSelect.setData(Array.from(breedSelect.options));
   loader.classList.add('hidden'); // Po zakończeniu wszystkich żądań, p.loader musi zostać ukryty.
 }
 
@@ -67,11 +73,15 @@ function renderCat(catData) {
   const { description, name, temperament } = catData.breeds[0];
   catInfo.insertAdjacentHTML(
     'beforeend',
-    `<div>
-        <h2>${name}</h2>
-        <img src="${url}" alt="${name}" />
-        <p>${description}</p>
-        <p><strong>Temperament: </strong> ${temperament}</p>
+    `<div class="cat-container">
+      <div>
+        <img class="cat-image" src="${url}" alt="${name}" />
+      </div>
+      <div class="info-container">
+        <h2 class="cat-breed">${name}</h2>
+        <p class="cat-description">${description}</p>
+        <p class="cat-temperament"><strong>Temperament: </strong> ${temperament}</p>
+        </div>
     </div>`
   );
   loader.classList.add('hidden'); // Po zakończeniu wszystkich żądań, p.loader musi zostać ukryty.
@@ -84,6 +94,12 @@ function showError() {
     'Oops! Something went wrong! Try reloading the page!'
   );
 }
+
+/*
+const slimSelect = new SlimSelect({
+  select: '.breed-select',
+});
+ */
 
 //
 
