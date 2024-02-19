@@ -18,7 +18,7 @@ W tym celu użyj dodatkowych klas CSS.
 - Po zakończeniu wszystkich żądań, p.loader musi zostać ukryty.
 */
 /*
-- Podczas wykonywania żądania listy ras, należy ukryć select.breed-select i wyświetlić p.loader.
+
 */
 try {
   loader.classList.remove("hidden"); // Podczas wykonywania żądania listy ras, należy ukryć select.breed-select i wyświetlić p.loader.
